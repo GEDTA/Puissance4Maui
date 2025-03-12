@@ -1,0 +1,62 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Puissance4.ViewModels"
+             x:Class="Puissance4.Views.GameView"
+             x:DataType="local:GameViewModel">
+
+    <ContentPage.BindingContext>
+        <local:GameViewModel />
+    </ContentPage.BindingContext>
+
+    <StackLayout Padding="10" >
+        <Label Text="{Binding CurrentPlayer.Name}" 
+               FontSize="Large" 
+               HorizontalOptions="Center" 
+               VerticalOptions="Center" />
+
+        <CollectionView ItemsSource="{Binding Grid}"   HorizontalOptions="Center"
+                        SelectionMode="None">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" Span="1" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="x:Object">
+                    <StackLayout Orientation="Horizontal">
+                        <CollectionView ItemsSource="{Binding .}" 
+                                        SelectionMode="None">
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout Orientation="Horizontal" Span="1" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="x:Object">
+                                    <Border WidthRequest="50" 
+        HeightRequest="50">
+                                        <Label Text="{Binding Owner.Name}" 
+           HorizontalOptions="Center" 
+           VerticalOptions="Center" />
+                                    </Border>
+
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <StackLayout Orientation="Horizontal" 
+             HorizontalOptions="Center">
+            <Button Text="Colonne 1" Command="{Binding PlaceTokenCommand}" CommandParameter="0" />
+            <Button Text="Colonne 2" Command="{Binding PlaceTokenCommand}" CommandParameter="1" />
+            <Button Text="Colonne 3" Command="{Binding PlaceTokenCommand}" CommandParameter="2" />
+            <Button Text="Colonne 4" Command="{Binding PlaceTokenCommand}" CommandParameter="3" />
+            <Button Text="Colonne 5" Command="{Binding PlaceTokenCommand}" CommandParameter="4" />
+            <Button Text="Colonne 6" Command="{Binding PlaceTokenCommand}" CommandParameter="5" />
+            <Button Text="Colonne 7" Command="{Binding PlaceTokenCommand}" CommandParameter="6" />
+        </StackLayout>
+
+        <Button Text="Réinitialiser" Command="{Binding ResetCommand}" 
+                HorizontalOptions="Center" 
+                VerticalOptions="Center" />
+    </StackLayout>
+</ContentPage>
