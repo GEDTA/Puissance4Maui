@@ -70,7 +70,7 @@ namespace Puissance4.Models
             CurrentPlayer = (CurrentPlayer == Player1) ? Player2 : Player1;
         }
 
-        bool CheckVictory(int lastRow, int lastCol)
+        public bool CheckVictory(int lastRow, int lastCol)
         {
             // Directions: horizontal, vertical, diagonal montant, diagonal descendant
             int[][] directions = new int[][]

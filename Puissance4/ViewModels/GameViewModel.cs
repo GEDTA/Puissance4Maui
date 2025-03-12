@@ -44,17 +44,28 @@ namespace Puissance4.ViewModels
         {
 
             var column = int.Parse(column2);
+            var modifiedrow= 0;
+            var win = false;
             if (_gameModel.PlaceToken(column))
             {
                 for (int row = 0; row < _gameModel.Rows; row++)
                 {
                     Grid[row][column] = _gameModel.Grid[row, column];
                     Grid[row][column].OnPropertyChanged(nameof(Models.Cell.Owner));
-                    
+                    modifiedrow = row;
                 }
                 OnPropertyChanged(nameof(CurrentPlayer));
             }
-
+            
+            win = _gameModel.CheckVictory(modifiedrow, column);
+            if (win)
+            {
+                var winner = _gameModel.CurrentPlayer;
+                var message = $"Le joueur {winner.Name} a gagné!";
+                var title = "Victoire";
+                var action = Application.Current.MainPage.DisplayAlert(title, message, "OK");
+                Reset();
+            }
         }
 
 
